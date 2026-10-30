@@ -848,3 +848,97 @@ a.pill:hover{border-color:var(--ink);box-shadow:var(--shadow)}
 @media (max-width:700px){.sv{aspect-ratio:4/3.4}.sv1 .floor{grid-template-columns:repeat(3,54px);gap:20px 28px}.tb{width:54px;height:54px}.sv2 .doc{width:70%}.sv5 .q{width:68%}.sv6 p{font-size:12.5px}.fv .avs span{width:48px;height:48px}.fv .avs{gap:12px}.fv .v-dev span{width:62px;height:62px}.zig-tx > p{font-size:16.5px}}
 @media (prefers-reduced-motion:reduce){.sv *,.sv *::before{animation:none!important}.sv .pop-chip{opacity:1;transform:translate(-50%,0)}.fv .v-chat > *,.fv .m1,.fv .v-rec p{opacity:1;transform:none}.zig-tx li{opacity:1;transform:none}.hs{stroke-dashoffset:0}.ln{width:var(--w)}.fv .v-dev span{transform:none}}
 .zn{display:none}
+
+/* ================= ESCALA MENOR ================= */
+:root{--ann-h:36px;--nav-h:58px}
+body{font-size:15px}
+.wrap{max-width:1080px;padding:0 24px}
+.ann{font-size:12px}
+.brand{font-size:17px}.brand-mark{width:26px;height:26px}
+.nav-links a{font-size:13.5px;padding:7px 11px}
+.nav-cta .btn{height:34px;padding:0 14px;font-size:13px}
+.btn{height:40px;padding:0 17px;font-size:14px;border-radius:8px}
+.h2{font-size:clamp(26px,3.3vw,38px)}
+.lead{font-size:15.5px;max-width:520px}
+.section{padding:84px 0}
+.section-head{margin-bottom:40px}
+.hero{padding:calc(var(--ann-h) + var(--nav-h) + 56px) 0 28px}
+.hero h1{font-size:clamp(34px,4.8vw,56px);margin-top:0}
+.signup input{height:44px;font-size:14px}.signup .btn{height:44px}
+.phone{width:272px}.screen{height:488px}
+.strip{margin-top:56px}.strip-item{padding:22px 20px}.strip-item b{font-size:26px}
+.wc{padding:24px}.wc h3{font-size:clamp(19px,1.9vw,23px)}.wc p{font-size:14px}
+.gb{padding:24px}.gb h3{font-size:17px}.gb > p{font-size:13.5px}
+.gk{padding:56px 40px 32px}.gk-top h2{font-size:clamp(30px,4.2vw,52px)}.gk-top p{font-size:15.5px}
+.sync{padding:44px 40px}.sync-copy h2{font-size:clamp(28px,3.6vw,42px)}
+.demo{max-width:100%}.d-stage{min-height:360px;padding:22px}.d-tab{padding:18px 22px}.d-tab b{font-size:15.5px}
+.ph{padding:calc(var(--ann-h) + var(--nav-h) + 60px) 0 32px}
+.ph h1{font-size:clamp(30px,4.4vw,50px);max-width:760px}
+.zigs{padding:0 0 24px}
+.zig{gap:56px;padding:36px 0}
+.zig-tx h2{font-size:clamp(24px,2.7vw,32px)}
+.zig-tx > p{font-size:16px;margin-top:10px}
+.zig-tx ul{margin-top:20px;gap:10px}.zig-tx li{font-size:14.5px}
+.sv{max-width:460px;width:100%;border-radius:18px}
+.zig-vis{display:flex}.zig .sv{justify-self:start}
+.zig.flip .zig-vis{justify-content:flex-end}
+.sv1 .floor{grid-template-columns:repeat(3,58px);gap:24px 32px}.tb{width:58px;height:58px}
+.fv .avs span{width:50px;height:50px}.fv .v-dev span{width:64px;height:64px}
+.calc-in{padding:32px;gap:10px}.calc-out{padding:32px}
+.c-row output{font-size:26px}
+.o-num b{font-size:clamp(44px,5vw,64px)}
+.cmp{font-size:14px}.cmp th,.cmp td{padding:13px 16px}
+.final{padding:76px 32px 64px}
+.final h2{font-size:clamp(30px,4.2vw,50px)}
+.pillform{max-width:460px}.pillform input,.pillform .btn{height:40px}
+.trust{margin-top:22px}.trust li{font-size:13px}
+.faq{max-width:720px}.qa button{font-size:15.5px;padding:20px 4px}.ans p{font-size:14.5px}
+footer{margin-top:72px}
+@media (max-width:980px){.section{padding:64px 0}.zig{gap:28px;padding:30px 0}.zig .sv,.zig.flip .zig-vis{justify-self:stretch;justify-content:flex-start}.sv{max-width:100%}}
+@media (max-width:700px){.wrap{padding:0 18px}.hero{padding-top:calc(var(--ann-h) + var(--nav-h) + 36px)}.final{padding:56px 20px 48px}.ph{padding-top:calc(var(--ann-h) + var(--nav-h) + 40px)}}
+
+/* ================= MOVIMENTO ================= */
+.prog{position:fixed;top:0;left:0;right:0;height:2px;background:var(--ink);transform-origin:left;transform:scaleX(0);z-index:120;pointer-events:none}
+.ann{z-index:110}
+.nav{transition:transform .55s var(--ease),background .3s,box-shadow .3s}
+.nav.hide{transform:translateY(calc(-100% - 2px))}
+.nav.scrolled{box-shadow:0 8px 30px -18px rgba(9,9,11,.35)}
+.curtain{position:fixed;inset:0;z-index:300;background:var(--ink);pointer-events:none;transform:translateY(101%);transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.curtain.go{transform:none}
+.curtain.cover{transform:none;transition:none}
+.curtain.reveal{transform:translateY(-101%)}
+.glow{position:fixed;left:0;top:0;width:460px;height:460px;margin:-230px 0 0 -230px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(9,9,11,.055),transparent 65%);will-change:transform}
+.sv{translate:0 var(--py,0px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .4s;will-change:transform}
+.sv:hover{box-shadow:0 30px 70px -30px rgba(9,9,11,.35)}
+.sv::after{content:"";position:absolute;width:62%;height:62%;left:-12%;top:-14%;border-radius:50%;background:radial-gradient(circle,rgba(9,9,11,.075),transparent 66%);animation:drift 13s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:translate(74%,70%) scale(1.35)}}
+.rv .w > span{animation-play-state:paused}
+.rv.in .w > span{animation-play-state:running}
+.btn-primary{will-change:transform}
+/* detalhes das ilustracoes */
+.tb{position:relative}
+.tb::before{content:"";position:absolute;inset:-8px;border-radius:inherit;border:2px dotted #d4d4d8}
+.tb.t3::after,.tb.t5::after{content:"";position:absolute;inset:-2px;border-radius:inherit;border:2px solid var(--ink);opacity:0;animation:ripple 7s var(--ease) infinite}
+.tb.t5::after{animation-delay:-3s}
+@keyframes ripple{0%,27%{opacity:0;transform:scale(1)}29%{opacity:.6}42%{opacity:0;transform:scale(1.9)}100%{opacity:0}}
+.blk::after{content:"";position:absolute;right:-5px;top:-5px;width:13px;height:13px;border-radius:50%;background:#fff;border:2px solid var(--ink);transform:scale(0);animation:ding 7s var(--ease) infinite}
+@keyframes ding{0%,38%{transform:scale(0)}42%{transform:scale(1.35)}46%,82%{transform:scale(1)}90%,100%{transform:scale(0)}}
+.sv5 .cnt{position:absolute;right:30px;top:30px;text-align:right}
+.sv5 .cnt b{display:block;font-size:34px;font-weight:500;letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
+.sv5 .cnt span{font-size:12.5px;color:var(--muted)}
+.sv8 .tc2{fill:#a1a1aa}
+.sv2 .doc,.sv3 .cal,.sv5 .q,.sv9 .ln9{animation-name:inherit}
+.sv2 .doc{animation:bob 5s ease-in-out infinite alternate}
+.sv5 .q{animation:bob 6s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.prog,.glow,.curtain{display:none}.sv{translate:none}.sv::after{animation:none}}
+
+/* globo */
+.fv .globe{height:94%;width:auto;aspect-ratio:1;cursor:grab;touch-action:pan-y;display:block}
+.sv.bb::after{display:none}
+/* so anima quando esta na tela */
+.sv:not(.live) *,.sv:not(.live) *::before,.sv:not(.live) *::after{animation-play-state:paused!important}
+.sv:not(.live) svg *{animation-play-state:paused!important}
+:where(a,button,input,[role=switch]):focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
+.btn:active{transform:scale(.97)}
+.rot{height:1.26em;line-height:1.22;margin-bottom:-.14em;padding-bottom:.04em}
