@@ -169,7 +169,7 @@
   var nav = document.querySelector('.nav'), panel = document.getElementById('panel'), lastY = 0, tick = false;
   var svs = $$('.zig .sv');
   function para() {
-    var vh = innerHeight;
+    var vh = innerHeight; if (innerWidth <= 980) return;
     svs.forEach(function (el) { var r = el.parentNode.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return; el.style.setProperty('--py', (-(r.top + r.height / 2 - vh / 2) * 0.055).toFixed(1) + 'px'); });
   }
   function onScroll() {
@@ -212,11 +212,6 @@
         el.style.transform = 'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 7).toFixed(2) + 'deg)';
       });
       el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-    // botoes magneticos
-    $$('.btn-primary').forEach(function (b) {
-      b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .22).toFixed(1) + 'px,' + ((e.clientY - r.top - r.height / 2) * .32).toFixed(1) + 'px)'; });
-      b.addEventListener('pointerleave', function () { b.style.transform = ''; });
     });
     // brilho que segue o cursor
     var g = document.createElement('div'); g.className = 'glow'; document.body.appendChild(g);
