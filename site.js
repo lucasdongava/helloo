@@ -129,3 +129,41 @@
     restart();
   });
 })();
+
+/* calculadora de preco */
+(function () {
+  var seats = document.getElementById('seats'); if (!seats) return;
+  var P = {
+    solo: { y: 9, m: 12, inc: ['One local number', 'Calls and texts', 'Free number porting', 'Mobile and desktop apps'] },
+    business: { y: 29, m: 39, inc: ['Shared inbox and routing', 'Recording and AI summaries', 'CRM sync and open API', 'Free number porting'] },
+    ultra: { y: 90, m: 90, inc: ['Everything in Business', 'Advanced reporting', 'Priority support', 'Dedicated onboarding'] }
+  };
+  var plan = 'business', add = { ai: false, dialer: false }, last = 8;
+  var out = document.getElementById('seatsOut'), total = document.getElementById('total'), note = document.getElementById('note'), inc = document.getElementById('inc');
+  var seg = document.getElementById('plan'), bill = document.getElementById('bill');
+  var ck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>';
+  function segPill() { var on = seg.querySelector('button.on'), p = seg.querySelector('.sgp'); p.style.width = on.offsetWidth + 'px'; p.style.transform = 'translateX(' + (on.offsetLeft - 3) + 'px)'; }
+  function render() {
+    var m = bill.querySelector('button.on').getAttribute('data-m');
+    var n = plan === 'solo' ? 1 : +seats.value;
+    seats.disabled = plan === 'solo';
+    if (plan === 'solo') seats.value = 1; else if (+seats.value === 1 && last > 1) seats.value = last;
+    n = +seats.value; if (plan !== 'solo') last = n;
+    out.textContent = n;
+    seats.style.setProperty('--p', ((n - 1) / 49 * 100) + '%');
+    var per = P[plan][m], sum = n * per + (add.ai ? 29 : 0) + (add.dialer ? 45 : 0);
+    if (window.helloTween) helloTween(total, sum); else total.textContent = '$' + sum;
+    var parts = [n + (n === 1 ? ' seat' : ' seats') + ' \u00d7 $' + per];
+    if (add.ai) parts.push('AI receptionist'); if (add.dialer) parts.push('Power dialer');
+    var save = (P[plan].m - P[plan].y) * n * 12;
+    note.textContent = parts.join(' + ') + (m === 'y' && save > 0 ? '  \u00b7  saves $' + save + ' a year' : '');
+    var items = P[plan].inc.slice(); if (add.ai) items.push('AI receptionist'); if (add.dialer) items.push('Power dialer');
+    inc.innerHTML = items.map(function (t, i) { return '<li style="--k:' + i + '">' + ck + t + '</li>'; }).join('');
+    segPill(); if (window.helloPill) helloPill();
+  }
+  seats.addEventListener('input', render);
+  seg.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; seg.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); }); plan = b.getAttribute('data-p'); render(); });
+  bill.addEventListener('click', function () { setTimeout(render, 0); });
+  Array.prototype.forEach.call(document.querySelectorAll('.sw'), function (s) { s.addEventListener('click', function () { var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); add[s.getAttribute('data-a')] = on; render(); }); });
+  render(); addEventListener('load', render);
+})();

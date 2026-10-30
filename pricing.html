@@ -36,20 +36,33 @@
 <main id="top">
 <section class="ph">
   <div class="wrap">
-    <h1>Simple <em>pricing.</em></h1>
-    <p class="lead">Pay per seat. Cancel any time.</p>
+    <h1>Price it <em>yourself.</em></h1>
+    
     <div class="ph-cta"><a href="index.html#start" class="btn btn-primary">Try for free</a></div>
   </div>
 </section>
 <section class="section" style="padding-top:24px">
   <div class="wrap">
-    <div class="toggle" id="bill"><i class="tpill"></i><button class="on" data-m="y">Yearly</button><button data-m="m">Monthly</button></div>
-    <div class="plans">
-      <div class="plan sp rv"><span class="eyebrow">Solo</span><div class="price"><span data-y="9" data-m="12">$9</span><small> /seat /mo</small></div><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>One local number</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Calls and texts</li></ul><a href="index.html#start" class="btn">Start free</a></div>
-      <div class="plan pop sp rv"><span class="eyebrow">Business</span><div class="price"><span data-y="29" data-m="39">$29</span><small> /seat /mo</small></div><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Shared inbox and routing</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Recording and AI summaries</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>CRM sync and API</li></ul><a href="index.html#start" class="btn btn-primary">Start free</a></div>
-      <div class="plan sp rv"><span class="eyebrow">Ultra</span><div class="price"><span>$90</span><small> /seat /mo</small></div><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Everything in Business</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Advanced reporting</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Priority support</li></ul><a href="index.html#faq" class="btn">Talk to sales</a></div>
+    <div class="calc rv">
+      <div class="calc-in">
+        <div class="c-row"><label for="seats">Seats</label><output id="seatsOut">8</output></div>
+        <input type="range" id="seats" min="1" max="50" value="8" aria-label="Seats">
+        <div class="c-row"><label>Plan</label></div>
+        <div class="seg" id="plan"><i class="sgp"></i><button data-p="solo">Solo</button><button class="on" data-p="business">Business</button><button data-p="ultra">Ultra</button></div>
+        <div class="c-row"><label>Billing</label></div>
+        <div class="toggle" id="bill"><i class="tpill"></i><button class="on" data-m="y">Yearly</button><button data-m="m">Monthly</button></div>
+        <div class="c-row"><label>Add-ons</label></div>
+        <div class="sw-list">
+          <button class="sw" data-a="ai" role="switch" aria-checked="false"><span class="sw-t"><i></i></span><span>AI receptionist</span><small>$29 / agent</small></button>
+          <button class="sw" data-a="dialer" role="switch" aria-checked="false"><span class="sw-t"><i></i></span><span>Power dialer</span><small>$45 / team</small></button>
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="o-top"><span class="o-lab">Your total</span><div class="o-num"><b id="total">$232</b><span>/ month</span></div><p id="note">8 seats &times; $29</p></div>
+        <ul class="o-list" id="inc"></ul>
+        <a href="index.html#start" class="btn">Start free trial</a>
+      </div>
     </div>
-    <div class="addons rv"><div><b>AI receptionist</b><span>$29 / agent / mo</span></div><div><b>Power dialer</b><span>$45 / team / mo</span></div></div>
   </div>
 </section>
 <section class="section" style="padding-top:0">
@@ -72,15 +85,16 @@
       <div class="qa open"><button aria-expanded="true">Is there a long contract?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>No. Cancel any time. 30-day money-back.</p></div></div></div>
       <div class="qa"><button aria-expanded="false">Is there a setup fee?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>No. Porting is free too.</p></div></div></div>
       <div class="qa"><button aria-expanded="false">Can I add or remove seats?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Yes, any time, no minimum.</p></div></div></div>
-      <div class="qa"><button aria-expanded="false">How does the trial work?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Three days. Your card is charged on day 3.</p></div></div></div>
     </div>
   </div>
 </section>
 <section class="section" style="padding-top:0">
   <div class="wrap">
     <div class="final rv">
+      <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <h2>Start your <em>trial.</em></h2>
-      <form class="signup" onsubmit="return false"><input type="email" placeholder="Your work email" aria-label="Work email"><button class="btn btn-primary" type="submit">Try for free</button></form>
+      <form class="signup pillform" onsubmit="return false"><input type="email" placeholder="Your work email" aria-label="Work email"><button class="btn btn-primary" type="submit">Try for free</button></form>
+      <ul class="trust"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>3-day free trial</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Free number porting</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Cancel any time</li></ul>
     </div>
   </div>
 </section>
