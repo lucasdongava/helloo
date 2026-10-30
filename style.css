@@ -1506,3 +1506,14 @@ footer{margin-top:104px}
 @media (max-width:980px){.pm-float{display:none}.iphone{transform:none}}
 @media (max-width:700px){.iphone{width:268px;height:556px;border-radius:52px}.ip-screen{border-radius:42px}.ip-amt strong{font-size:34px}.ip-body{gap:9px}}
 @media (prefers-reduced-motion:reduce){.pm-float{animation:none}.sp-line{stroke-dashoffset:0;animation:none!important}.ip-bar i{width:var(--w);animation:none!important}.sp-fill{opacity:1;animation:none!important}}
+
+/* ===== home: telefone com a moldura de iPhone ===== */
+.stage{perspective:1400px}
+.stage .iphone{width:296px;height:612px;margin:0 auto}
+.stage .ip-screen.screen{height:100%;border-radius:47px;background:var(--soft);display:flex;flex-direction:column}
+.stage .ip-screen .status{padding:17px 28px 6px;height:auto}
+.stage .ip-screen .line-head{padding-top:14px}
+.stage .ip-screen .dock{padding-bottom:28px}
+.stage .ring-in{top:56px}
+@media (max-width:700px){.stage .iphone{width:268px;height:556px}.stage .ip-screen .line-head{padding-top:6px}}
+.stage .ip-screen::after{display:none}
