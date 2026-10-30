@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Helloo is a business phone system with AI agents: reliable calls, an AI receptionist and a CRM that updates itself. A fictional project by Lucas Gava.">
+<meta name="theme-color" content="#ffffff">
+<title>Helloo | Business phone system with AI agents</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2309090b'/%3E%3Ccircle cx='16' cy='17' r='3.2' fill='white'/%3E%3Cpath d='M9.5 17a6.5 6.5 0 0 1 13 0' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#fff;--ink:#09090b;--text:#18181b;--text-2:#52525b;--muted:#8e8e93;
+  --line:#e5e5e7;--soft:#f7f7f7;--soft-2:#f0f0f2;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --shadow:0 1px 2px rgba(9,9,11,.04),0 12px 32px -12px rgba(9,9,11,.14);
+  --shadow-lg:0 4px 10px rgba(9,9,11,.05),0 40px 80px -30px rgba(9,9,11,.28);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --ann-h:40px;--nav-h:64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;color-scheme:light;scroll-padding-top:calc(var(--ann-h) + var(--nav-h) + 12px)}
+body{background:var(--bg);color:var(--text);font:16px/1.55 'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img,svg{display:block;max-width:100%}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-.035em;color:var(--ink);line-height:1.08}
+.h2{font-size:clamp(30px,4.2vw,48px)}
+.h2 em{font-style:normal;color:#a1a1a6}
+.lead{font-size:17px;color:var(--text-2);max-width:560px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:8px;font-size:14.5px;font-weight:500;border:1px solid var(--line);background:#fff;transition:transform .4s var(--ease),background .3s,box-shadow .3s,border-color .3s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-primary:hover{background:#27272a}
+.btn svg{width:15px;height:15px}
+.section{padding:120px 0}
+.section-head{max-width:680px;margin-bottom:56px}
+.section-head .h2{margin-top:16px}
+.section-head .lead{margin-top:18px}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+
+/* aviso de projeto ficticio */
+.ann{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--ann-h);background:var(--ink);color:#d4d4d8;font-size:12.5px;display:flex;align-items:center;justify-content:center;padding:0 16px;text-align:center}
+.ann a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.ann .short{display:none}
+
+/* nav */
+.nav{position:fixed;top:var(--ann-h);left:0;right:0;z-index:50;height:var(--nav-h);background:rgba(255,255,255,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:19px;letter-spacing:-.04em;color:var(--ink)}
+.brand-mark{width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;display:grid;place-items:center}
+.brand-mark svg{width:16px;height:16px}
+.nav-links{display:flex;gap:6px}
+.nav-links a{font-size:14px;color:var(--text-2);padding:8px 12px;border-radius:7px;transition:background .3s,color .3s}
+.nav-links a:hover{background:var(--soft-2);color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:8px}
+.nav-cta .btn{height:38px;padding:0 16px;font-size:13.5px}
+.nav-cta .login{border:0;color:var(--text-2)}
+.menu-btn{display:none;width:40px;height:40px;border-radius:8px;border:1px solid var(--line);align-items:center;justify-content:center}
+.menu-btn svg{width:18px;height:18px}
+.m-panel{display:none}
+
+/* hero */
+.hero{padding:calc(var(--ann-h) + var(--nav-h) + 80px) 0 40px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.45;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 30%,transparent 75%);z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border:1px solid var(--line);border-radius:99px;background:#fff;font-size:12.5px;color:var(--text-2)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(9,9,11,.08);animation:pulse 2.4s ease-in-out infinite;margin-left:6px}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(9,9,11,.02)}}
+.hero h1{font-size:clamp(40px,6vw,72px);margin-top:26px;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:#a1a1a6}
+.hero .lead{margin-top:24px}
+.signup{display:flex;gap:10px;margin-top:34px;max-width:480px}
+.signup input{flex:1;min-width:0;height:48px;padding:0 16px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14.5px;background:#fff;color:var(--ink);transition:border-color .3s,box-shadow .3s}
+.signup input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(9,9,11,.06)}
+.signup .btn{height:48px}
+.fine{font-size:12.5px;color:var(--muted);margin-top:14px}
+.fine a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:#c7c7cc}
+
+/* telefone */
+.stage{position:relative;display:flex;justify-content:center}
+.phone{width:310px;border:1px solid var(--line);border-radius:38px;background:#fff;padding:12px;box-shadow:var(--shadow-lg);position:relative}
+.screen{border-radius:28px;background:var(--soft);overflow:hidden;height:560px;display:flex;flex-direction:column}
+.status{display:flex;justify-content:space-between;padding:14px 22px 6px;font-size:12px;font-weight:500;color:var(--ink)}
+.line-head{padding:8px 18px 12px}
+.line-head b{display:block;font-size:19px;font-weight:500;letter-spacing:-.03em;color:var(--ink)}
+.line-head span{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.tabs{display:flex;gap:6px;padding:0 18px 12px}
+.tabs span{font-size:11.5px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--text-2)}
+.tabs span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.threads{flex:1;overflow:hidden;background:#fff;border-radius:22px 22px 0 0;padding:6px 0}
+.thread{display:flex;gap:11px;padding:11px 16px;border-bottom:1px solid #f1f1f3;animation:rise .8s var(--ease) both}
+.thread:nth-child(2){animation-delay:.08s}.thread:nth-child(3){animation-delay:.16s}.thread:nth-child(4){animation-delay:.24s}.thread:nth-child(5){animation-delay:.32s}
+.av{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--soft-2);display:grid;place-items:center;font-size:12px;font-weight:500;color:var(--ink)}
+.av.dark{background:var(--ink);color:#fff}
+.thread > div{min-width:0;flex:1}
+.thread b{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:500;color:var(--ink)}
+.thread b small{font-weight:400;font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+.thread p{font-size:12px;color:var(--text-2);line-height:1.45;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dock{display:flex;justify-content:space-around;padding:12px 10px 16px;background:#fff;border-top:1px solid #f1f1f3;font-size:10.5px;color:var(--muted)}
+.dock span.on{color:var(--ink);font-weight:500}
+.float{z-index:3;position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:14px 16px;font-size:12px;animation:float 7s var(--ease) infinite alternate}
+.float .eyebrow{font-size:9px;color:var(--ink)}
+.float p{color:var(--text-2);margin-top:6px;line-height:1.45}
+.float ul{list-style:none;margin-top:8px;display:grid;gap:5px}
+.float li{display:flex;gap:7px;align-items:center;color:var(--ink)}
+.float li svg{width:13px;height:13px}
+.f1{width:230px;left:-30px;top:96px}
+.f2{width:200px;right:-26px;bottom:90px;animation-delay:-3s}
+@keyframes float{to{transform:translateY(-10px)}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+
+/* faixa */
+.strip{margin-top:80px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.strip-item{padding:28px 24px;border-left:1px solid var(--line)}
+.strip-item:first-child{border-left:0;padding-left:0}
+.strip-item b{display:block;font-size:30px;font-weight:500;letter-spacing:-.04em;color:var(--ink);font-variant-numeric:tabular-nums}
+.strip-item span{font-size:13px;color:var(--text-2)}
+.note{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-top:14px;text-align:center}
+
+/* porque trocar */
+.why{display:grid;gap:20px}
+.why-row{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.why-row:nth-child(even) .why-copy{order:2}
+.why-copy{padding:44px 44px;display:flex;flex-direction:column;justify-content:center}
+.why-copy .bad{font-size:13px;color:var(--muted);text-decoration:line-through;text-decoration-color:#c7c7cc}
+.why-copy h3{font-size:clamp(24px,2.6vw,32px);margin-top:10px}
+.why-copy p{margin-top:14px;color:var(--text-2);font-size:15.5px;max-width:420px}
+.why-ui{background:var(--soft);border-left:1px solid var(--line);padding:36px;display:grid;place-items:center;min-height:280px}
+.why-row:nth-child(even) .why-ui{border-left:0;border-right:1px solid var(--line)}
+.card{width:100%;max-width:340px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:18px}
+.card + .card{margin-top:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}
+.row + .row{margin-top:12px;padding-top:12px;border-top:1px solid #f1f1f3}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--text-2);white-space:nowrap}
+.tag.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.meter{height:6px;border-radius:99px;background:var(--soft-2);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--ink);border-radius:99px;transform-origin:left;animation:grow 2.4s var(--ease) both}
+@keyframes grow{from{transform:scaleX(0)}}
+.chat{font-size:13px}
+.chat .me{background:var(--ink);color:#fff;padding:9px 13px;border-radius:12px 12px 3px 12px;margin-left:36px}
+.chat .ai{background:var(--soft-2);color:var(--ink);padding:9px 13px;border-radius:12px 12px 12px 3px;margin-top:8px;margin-right:36px}
+
+/* troca */
+.switch{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.step{border:1px solid var(--line);border-radius:12px;padding:30px;background:#fff;position:relative;transition:transform .5s var(--ease),box-shadow .4s}
+.step:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+.step h3{font-size:20px;margin-top:14px;letter-spacing:-.03em}
+.step ul{list-style:none;margin-top:16px;display:grid;gap:8px}
+.step li{display:flex;gap:9px;align-items:center;font-size:14px;color:var(--text-2)}
+.step li svg{width:14px;height:14px;color:var(--ink);flex:0 0 auto}
+
+/* preco */
+.price-wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:stretch}
+.compare{border:1px solid var(--line);border-radius:12px;padding:32px;background:var(--soft);display:flex;flex-direction:column;justify-content:space-between}
+.bars{display:grid;gap:18px;margin-top:28px}
+.bar b{display:flex;justify-content:space-between;font-size:13px;font-weight:500;color:var(--ink)}
+.bar .track{height:34px;border-radius:7px;background:#fff;border:1px solid var(--line);margin-top:8px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:var(--ink);transform-origin:left;animation:grow 2s var(--ease) both}
+.bar.alt .track i{background:#d4d4d8}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan{border:1px solid var(--line);border-radius:12px;padding:26px 22px;background:#fff;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .4s}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.plan.pop{border-color:var(--ink);box-shadow:var(--shadow)}
+.plan .eyebrow{color:var(--ink)}
+.plan .price{font-size:38px;font-weight:500;letter-spacing:-.05em;color:var(--ink);margin-top:14px;font-variant-numeric:tabular-nums}
+.plan .price small{font-size:13px;font-weight:400;color:var(--muted);letter-spacing:0}
+.plan p{font-size:13px;color:var(--text-2);margin-top:8px}
+.plan ul{list-style:none;margin:20px 0 24px;display:grid;gap:9px;flex:1}
+.plan li{display:flex;gap:8px;font-size:13.5px;color:var(--text-2);align-items:flex-start}
+.plan li svg{width:14px;height:14px;margin-top:3px;color:var(--ink);flex:0 0 auto}
+.plan .btn{justify-content:center;width:100%}
+.toggle{display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:9px;background:#fff;margin-bottom:16px}
+.toggle button{padding:6px 14px;font-size:12.5px;border-radius:6px;color:var(--text-2);transition:background .3s,color .3s}
+.toggle button.on{background:var(--ink);color:#fff}
+
+/* recursos */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fcard{border:1px solid var(--line);border-radius:12px;padding:28px;background:#fff;transition:transform .5s var(--ease),box-shadow .4s,border-color .3s}
+.fcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#d4d4d8}
+.fi{width:40px;height:40px;border-radius:9px;border:1px solid var(--line);background:var(--soft);display:grid;place-items:center;color:var(--ink);transition:background .3s,color .3s}
+.fcard:hover .fi{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fi svg{width:19px;height:19px}
+.fcard h3{font-size:18px;margin-top:22px;letter-spacing:-.03em}
+.fcard p{font-size:14.5px;color:var(--text-2);margin-top:10px}
+.fcard.wide{grid-column:span 2}
+.code{margin-top:20px;border-radius:10px;background:var(--ink);color:#d4d4d8;font-family:var(--mono);font-size:12px;line-height:1.7;padding:16px 18px;overflow:auto}
+.code .k{color:#fff}.code .c{color:#71717a}
+
+/* para quem */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.fit-col{border:1px solid var(--line);border-radius:12px;padding:34px;background:#fff}
+.fit-col.no{background:var(--soft)}
+.fit-col h3{font-size:22px}
+.fit-col ul{list-style:none;margin-top:22px;display:grid;gap:14px}
+.fit-col li{display:flex;gap:10px;color:var(--text-2);font-size:15px}
+.fit-col li svg{width:16px;height:16px;margin-top:4px;flex:0 0 auto;color:var(--ink)}
+.fit-col.no li{color:var(--muted)}
+.fit-col.no li svg{color:#a1a1a6}
+.seats{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.seats .track{position:relative;height:6px;border-radius:99px;background:var(--soft-2);margin-top:14px}
+.seats .track i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--ink)}
+.seats .marks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:10px}
+
+/* faq */
+.faq{max-width:820px;margin:0 auto;border-top:1px solid var(--line)}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 4px;text-align:left;font-size:17px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.qa button svg{width:18px;height:18px;flex:0 0 auto;transition:transform .5s var(--ease);color:var(--muted)}
+.qa.open button svg{transform:rotate(45deg);color:var(--ink)}
+.ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+.qa.open .ans{grid-template-rows:1fr}
+.ans > div{overflow:hidden}
+.ans p{padding:0 40px 26px 4px;color:var(--text-2);font-size:15.5px}
+
+/* cta */
+.final{border-radius:14px;background:var(--ink);color:#fff;padding:88px 40px;text-align:center;position:relative;overflow:hidden;isolation:isolate}
+.final::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 100%,#000,transparent 80%);mask-image:radial-gradient(ellipse 60% 70% at 50% 100%,#000,transparent 80%);z-index:-1}
+.final h2{color:#fff;font-size:clamp(32px,5vw,56px)}
+.final h2 em{font-style:normal;color:#8e8e93}
+.final p{color:#a1a1aa;margin:20px auto 0;max-width:460px}
+.final .signup{margin:34px auto 0}
+.final .signup input{background:#18181b;border-color:#3f3f46;color:#fff}
+.final .signup input::placeholder{color:#71717a}
+.final .signup input:focus{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.1)}
+.final .btn-primary{background:#fff;color:var(--ink);border-color:#fff}
+.final .btn-primary:hover{background:#e4e4e7}
+.final .fine{color:#71717a}
+
+footer{margin-top:120px;padding:0 0 40px}
+.f-top{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid var(--line);gap:20px;flex-wrap:wrap}
+.f-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:28px;font-size:12.5px;color:var(--muted)}
+.f-links{display:flex;gap:22px;font-size:13.5px;color:var(--text-2)}
+.f-links a:hover{color:var(--ink)}
+
+/* revelar */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+/* grok bot */
+.grok{display:grid;grid-template-columns:1fr 1fr;border-radius:14px;background:var(--ink);color:#fff;overflow:hidden;position:relative;isolation:isolate}
+.grok::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:radial-gradient(ellipse 80% 80% at 80% 50%,#000,transparent 80%);mask-image:radial-gradient(ellipse 80% 80% at 80% 50%,#000,transparent 80%);z-index:-1}
+.grok-copy{padding:64px 56px}
+.grok-copy .eyebrow{color:#a1a1aa}
+.grok-copy h2{color:#fff;font-size:clamp(34px,4.6vw,56px);margin-top:16px}
+.grok-copy h2 em{font-style:normal;color:#8e8e93}
+.grok-copy > p{color:#a1a1aa;margin-top:20px;max-width:440px;font-size:16px}
+.grok-copy ul{list-style:none;margin:28px 0 32px;display:grid;gap:12px}
+.grok-copy li{display:flex;gap:10px;font-size:15px;color:#e4e4e7}
+.grok-copy li svg{width:15px;height:15px;margin-top:4px;flex:0 0 auto;color:#fff}
+.grok-copy .btn{background:#fff;color:var(--ink);border-color:#fff}
+.grok-copy .btn:hover{background:#e4e4e7}
+.grok-copy .legal{font-size:11.5px;color:#71717a;margin-top:26px;max-width:420px;line-height:1.5}
+.grok-ui{padding:48px 44px 48px 8px;display:grid;place-items:center}
+.gcall{width:100%;max-width:400px;border:1px solid #27272a;border-radius:16px;background:#111113;padding:20px;box-shadow:0 40px 80px -30px rgba(0,0,0,.8)}
+.ghead{display:flex;align-items:center;gap:10px;font-size:14px}
+.ghead b{font-weight:500;flex:1}
+.ghead .tag{background:transparent;color:#a1a1aa;border-color:#3f3f46}
+.gdot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse2 1.6s ease-in-out infinite}
+@keyframes pulse2{50%{opacity:.25}}
+.wave{display:flex;align-items:center;justify-content:space-between;gap:3px;height:44px;margin:18px 0}
+.wave i{flex:1;background:#fff;border-radius:99px;height:30%;opacity:.85;animation:wv 1.2s ease-in-out infinite}
+.wave i:nth-child(3n){animation-delay:-.4s}.wave i:nth-child(3n+1){animation-delay:-.8s}.wave i:nth-child(4n){animation-duration:.9s}.wave i:nth-child(5n){animation-duration:1.5s}
+@keyframes wv{50%{height:95%}}
+.bub{font-size:13px;line-height:1.45;padding:10px 13px;border-radius:12px;max-width:86%;animation:rise .8s var(--ease) both}
+.bub + .bub{margin-top:8px}
+.bub.them{background:#27272a;color:#e4e4e7;border-bottom-left-radius:3px}
+.bub.bot{background:#fff;color:var(--ink);border-bottom-right-radius:3px;margin-left:auto}
+.bub:nth-of-type(2){animation-delay:.15s}.bub:nth-of-type(3){animation-delay:.3s}.bub:nth-of-type(4){animation-delay:.45s}
+.acts{margin-top:18px;padding-top:16px;border-top:1px solid #27272a;display:grid;gap:8px;font-size:12px;color:#a1a1aa}
+.acts span{display:flex;gap:12px}
+.acts b{font-family:var(--mono);font-weight:400;color:#71717a}
+.pill{transition:border-color .3s,box-shadow .3s}
+a.pill:hover{border-color:var(--ink);box-shadow:var(--shadow)}
+@media (max-width:980px){.grok{grid-template-columns:1fr}.grok-copy{padding:48px 32px 24px}.grok-ui{padding:16px 24px 40px}}
+@media (max-width:700px){.grok-copy{padding:40px 22px 16px}.grok-ui{padding:12px 14px 28px}.gcall{padding:16px}}
+/* grok bot: grade de recursos */
+.gb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gb{border:1px solid var(--line);border-radius:12px;padding:28px;background:#fff;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .4s,border-color .3s}
+.gb:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#d4d4d8}
+.gb h3{font-size:19px;letter-spacing:-.03em}
+.gb > p{font-size:14.5px;color:var(--text-2);margin-top:10px;flex:1}
+.mini{margin-top:22px;border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:14px;font-size:12.5px}
+.m-me{background:var(--ink);color:#fff;padding:8px 12px;border-radius:10px 10px 3px 10px;margin-left:28px}
+.m-bot{background:#fff;border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:10px 10px 10px 3px;margin-top:8px;margin-right:28px}
+.mini > .m-bot:first-child{margin-top:0}
+.m-row{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--ink)}
+.m-row + .m-row{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--line);border-radius:99px;background:#fff;color:var(--ink)}
+.chips svg{width:12px;height:12px}
+.rec{margin-top:12px;display:flex;align-items:center;gap:8px;color:var(--text-2)}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse2 1.6s ease-in-out infinite}
+.m-mem{margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.04em}
+.chain{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.chain span{padding:6px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.chain b{color:var(--muted);font-weight:400}
+.roles{margin-top:40px;text-align:center}
+.role-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+.role-list span{padding:9px 16px;border:1px solid var(--line);border-radius:99px;background:#fff;font-size:13.5px;color:var(--ink);transition:background .3s,color .3s,border-color .3s}
+.role-list span:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media (max-width:980px){.gb-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.gb-grid{grid-template-columns:1fr}.gb{padding:24px}}
+/* responsivo */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:56px}
+  .stage{margin-top:8px}
+  .strip .wrap{grid-template-columns:1fr 1fr}
+  .strip-item:nth-child(3){border-left:0;padding-left:0}
+  .strip-item:nth-child(n+3){border-top:1px solid var(--line)}
+  .why-row,.why-row:nth-child(even){grid-template-columns:1fr}
+  .why-row:nth-child(even) .why-copy{order:0}
+  .why-ui,.why-row:nth-child(even) .why-ui{border-left:0;border-right:0;border-top:1px solid var(--line)}
+  .switch{grid-template-columns:1fr}
+  .price-wrap{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fcard.wide{grid-column:span 2}
+  .fit{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .menu-btn{display:flex}
+  .nav-cta .login{display:none}
+  .m-panel{display:block;position:fixed;left:12px;right:12px;top:calc(var(--ann-h) + var(--nav-h) + 8px);z-index:49;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .35s var(--ease),transform .45s var(--ease),visibility 0s .35s}
+  .m-panel.on{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease),transform .45s var(--ease),visibility 0s}
+  .m-panel a{display:block;padding:13px 14px;border-radius:8px;font-size:15px}
+  .m-panel a:hover{background:var(--soft-2)}
+}
+@media (max-width:700px){
+  :root{--ann-h:44px}
+  .wrap{padding:0 20px}
+  .section{padding:76px 0}
+  .section-head{margin-bottom:36px}
+  .ann .long{display:none}.ann .short{display:inline}
+  .hero{padding-top:calc(var(--ann-h) + var(--nav-h) + 44px)}
+  .signup{flex-direction:column}
+  .signup input{flex:none;width:100%}
+  .signup .btn{justify-content:center}
+  .phone{width:280px}
+  .screen{height:500px}
+  .float{display:none}
+  .strip{margin-top:56px}
+  .strip-item{padding:22px 16px}
+  .strip-item b{font-size:24px}
+  .why-copy{padding:30px 24px}
+  .why-ui{padding:24px 16px;min-height:0}
+  .plans{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .fcard.wide{grid-column:auto}
+  .fit-col{padding:26px 22px}
+  .qa button{font-size:16px;padding:20px 2px}
+  .ans p{padding-right:8px}
+  .final{padding:64px 22px}
+  .f-top{flex-direction:column;align-items:flex-start}
+  .f-bottom{flex-direction:column}
+  .nav-cta .btn-primary{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="ann"><span><span class="long">Fictional project designed and developed by </span><span class="short">Fictional project by </span><a href="https://www.linkedin.com/in/lucasgava" target="_blank" rel="noopener">Lucas Gava</a></span></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Helloo"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="14" r="2.4" fill="currentColor" stroke="none"/><path d="M6 14a6 6 0 0 1 12 0"/><path d="M2.5 14a9.5 9.5 0 0 1 19 0" opacity=".55"/></svg></span>Helloo</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#product">Product</a><a href="#grok">Grok bot</a><a href="#switch">Switching</a><a href="#pricing">Pricing</a><a href="#features">Features</a><a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn login">Log in</a>
+      <a href="#start" class="btn btn-primary">Try for free</a>
+      <button class="menu-btn" id="menu" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="m-panel" id="panel">
+  <a href="#product">Product</a><a href="#grok">Grok bot</a><a href="#switch">Switching</a><a href="#pricing">Pricing</a><a href="#features">Features</a><a href="#faq">FAQ</a><a href="#start">Try for free</a>
+</div>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <a href="#grok" class="pill"><i></i>New: the Grok bot, an AI agent on every call</a>
+      <h1>The last phone system <em>your team will ever need.</em></h1>
+      <p class="lead">Helloo gives you crystal-clear calls and an AI that works before you ask: it answers, follows up and keeps your CRM current, at a price that makes sense for a small team.</p>
+      <form class="signup" onsubmit="return false">
+        <input type="email" placeholder="Your work email" aria-label="Work email">
+        <button class="btn btn-primary" type="submit">Try for free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+      </form>
+      <p class="fine">3-day free trial. Or <a href="#faq">talk it through with our team</a>.</p>
+    </div>
+    <div class="stage" id="product">
+      <div class="float f1"><span class="eyebrow">AI call summary</span><p>Boiler quote confirmed. Site visit booked for Saturday morning.</p><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>CRM updated</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Callback scheduled</li></ul></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>5G</span></div>
+          <div class="line-head"><b>Main line</b><span>(555) 123-0100</span></div>
+          <div class="tabs"><span class="on">All</span><span>Unread</span><span>Unanswered</span><span>Archived</span></div>
+          <div class="threads">
+            <div class="thread"><span class="av dark">EJ</span><div><b>Emma Johnson<small>3:51 PM</small></b><p>Called back about the replacement quote. Price works, asked for the earliest site visit.</p></div></div>
+            <div class="thread"><span class="av">MB</span><div><b>Mason Brooks<small>Aug 8</small></b><p>Went through Thursday's install list. He will confirm the parts order in the morning.</p></div></div>
+            <div class="thread"><span class="av">#</span><div><b>(555) 402-7788<small>Aug 8</small></b><p>Voicemail · 0:11</p></div></div>
+            <div class="thread"><span class="av">LC</span><div><b>Liam Carter<small>Aug 7</small></b><p>Wants the Friday slot moved to the morning if anything opens up.</p></div></div>
+            <div class="thread"><span class="av">OB</span><div><b>Olivia Bennett<small>Aug 7</small></b><p>Can you split the quote across two invoices?</p></div></div>
+          </div>
+          <div class="dock"><span class="on">Inbox</span><span>Calls</span><span>Keypad</span></div>
+        </div>
+      </div>
+      <div class="float f2"><span class="eyebrow">Receptionist</span><p>"I can book you in on Saturday at 9. Does that work?"</p></div>
+    </div>
+  </div>
+
+  <div class="strip rv">
+    <div class="wrap">
+      <div class="strip-item"><b data-n="99.99" data-d="2">99.99%</b><span>Call uptime target</span></div>
+      <div class="strip-item"><b data-n="4" data-s="x">4x</b><span>Fewer dropped calls</span></div>
+      <div class="strip-item"><b data-n="15" data-s=" min">15 min</b><span>Average first response</span></div>
+      <div class="strip-item"><b data-n="0" data-s=" setup fee">0 setup fee</b><span>Free number porting</span></div>
+    </div>
+    <p class="note">ILLUSTRATIVE DATA FOR A FICTIONAL PRODUCT</p>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Why teams switch</span>
+      <h2 class="h2">Built for teams that are done <em>settling for less.</em></h2>
+      <p class="lead">Most phone systems were designed for call centers. Helloo was designed for the rest of us.</p>
+    </div>
+    <div class="why">
+      <article class="why-row rv">
+        <div class="why-copy"><span class="bad">Dropped calls, spam flags, bad audio</span><h3>Calls that sound like a real phone call.</h3><p>We run our own call infrastructure, tuned for voice quality first. Your caller sees your name, not a spam label, and the audio stays clear.</p></div>
+        <div class="why-ui"><div class="card"><div class="row"><span>Caller ID</span><span class="tag dark">VERIFIED</span></div><div class="row"><span>Audio quality</span><span class="tag">HD</span></div><div class="row"><span>Spam risk</span><span class="tag">LOW</span></div><div class="meter"><i style="width:92%"></i></div></div></div>
+      </article>
+      <article class="why-row rv">
+        <div class="why-copy"><span class="bad">Hundreds of clicks to change anything</span><h3>Admin that takes one sentence.</h3><p>Change business hours, routing and greetings in the app, or just ask the assistant to do it. No IT team, no admin login to hunt for.</p></div>
+        <div class="why-ui"><div class="card chat"><div class="me">Send calls to my cell after 6 pm</div><div class="ai">Done. Call routing updated for weekdays.</div></div></div>
+      </article>
+      <article class="why-row rv">
+        <div class="why-copy"><span class="bad">AI that waits for you to tell it what to do</span><h3>An assistant that acts after every call.</h3><p>Helloo writes the summary, updates the CRM, sets reminders and books the callback. You get the time back instead of another tab.</p></div>
+        <div class="why-ui"><div class="card"><div class="row"><span>Summary written</span><span class="tag dark">DONE</span></div><div class="row"><span>CRM updated</span><span class="tag dark">DONE</span></div><div class="row"><span>Callback booked</span><span class="tag dark">DONE</span></div></div></div>
+      </article>
+      <article class="why-row rv">
+        <div class="why-copy"><span class="bad">Support tickets that go nowhere</span><h3>A real person who knows your account.</h3><p>Call, text or chat with the same person who onboarded you. Fast first answers, and a fix, not a ticket number.</p></div>
+        <div class="why-ui"><div class="card"><div class="row"><span>Support line</span><span class="tag dark">ONLINE</span></div><div class="row"><span>Your onboarding lead</span><span class="tag">JESS</span></div><div class="row"><span>Languages</span><span class="tag">EN · FR · ES</span></div></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="grok" style="padding-top:0">
+  <div class="wrap">
+    <div class="grok rv">
+      <div class="grok-copy">
+        <span class="eyebrow">The Helloo difference</span>
+        <h2>Meet the <em>Grok bot.</em></h2>
+        <p>AI teammates you can give real phone work to. Bots sign in to your tools, use them the way you do, and come back with finished work: calls answered, follow-ups sent, records updated.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Answers in real time, in the caller's language</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Reads your calendar, CRM and past calls before it speaks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Acts after the call: summary, tasks, follow-up</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Escalates to a human the moment it should</li>
+        </ul>
+        <a href="#start" class="btn">Try the Grok bot</a>
+        <p class="legal">Illustrative integration for a fictional product. Grok is a name owned by xAI, used here only to describe the concept. No affiliation or endorsement.</p>
+      </div>
+      <div class="grok-ui">
+        <div class="gcall">
+          <div class="ghead"><span class="gdot"></span><b>Grok bot</b><span class="tag">LIVE · 00:42</span></div>
+          <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="bub them">Hi, can someone look at my boiler this week?</div>
+          <div class="bub bot">Of course. I have Saturday at 9 open, or Monday at 8. Which works better?</div>
+          <div class="bub them">Saturday is perfect.</div>
+          <div class="bub bot">Booked. I just texted you the confirmation.</div>
+          <div class="acts">
+            <span><b>09:41</b>Slot checked on calendar</span>
+            <span><b>09:41</b>Visit booked, SMS sent</span>
+            <span><b>09:42</b>CRM record updated</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="grok-more" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Grok bot</span>
+      <h2 class="h2">Hand it the work. <em>Get it back finished.</em></h2>
+      <p class="lead">Treat Grok bots like teammates: message them, teach them once, and let them run in parallel, around the clock.</p>
+    </div>
+    <div class="gb-grid">
+      <article class="gb rv"><h3>Message bots like teammates</h3><p>Give a task the way you would to a colleague. The bot takes it from start to end and comes back only when it needs your approval.</p>
+        <div class="mini"><div class="m-me">Call back everyone who missed us today.</div><div class="m-bot">On it. 14 callbacks queued, 3 need your approval.</div></div></article>
+      <article class="gb rv d1"><h3>Work with many bots at once</h3><p>One on inbound, one on outbound, one on follow-ups. They work in parallel and keep going 24/7.</p>
+        <div class="mini"><div class="m-row"><span>Inbound</span><span class="tag dark">ANSWERING</span></div><div class="m-row"><span>Outbound</span><span class="tag">DIALING 41/128</span></div><div class="m-row"><span>Follow-up</span><span class="tag">TEXTING</span></div></div></article>
+      <article class="gb rv d2"><h3>Works where you work</h3><p>Log a bot in once. It uses your CRM, calendar and helpdesk like you would, including the tools that are hard to automate.</p>
+        <div class="mini chips"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> CRM</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Calendar</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Helpdesk</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg> Spreadsheets</span></div></article>
+      <article class="gb rv"><h3>Show a bot how it's done</h3><p>Do a workflow once while it watches. It saves the steps as a routine and runs it on its own next time.</p>
+        <div class="mini"><div class="m-row"><span>Weekly reporting</span><span class="tag">LEARNING 0:04</span></div><div class="rec"><i></i>Teach a task</div></div></article>
+      <article class="gb rv d1"><h3>Bots get smarter over time</h3><p>They keep context and learn from each other. Teach one today, hand off the whole project by Friday.</p>
+        <div class="mini"><div class="m-bot">Noted for next time: this client books mornings, and Dana approves quotes.</div><div class="m-mem">Memory updated · Account bot</div></div></article>
+      <article class="gb rv d2"><h3>Connect the bots</h3><p>Put a few in the same thread and they pass work between themselves, so you are not approving every step.</p>
+        <div class="mini chain"><span>Receptionist</span><b>›</b><span>Scheduler</span><b>›</b><span>CRM keeper</span></div></article>
+    </div>
+    <div class="roles rv">
+      <span class="eyebrow">Give each bot a job</span>
+      <div class="role-list"><span>Inbound receptionist</span><span>Outbound dialer</span><span>Missed-call follow-up</span><span>Appointment setter</span><span>Voicemail triage</span><span>CRM keeper</span><span>Support concierge</span><span>Chief of staff</span></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="switch" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Switching</span>
+      <h2 class="h2">Worried about switching? <em>We handle everything.</em></h2>
+    </div>
+    <div class="switch">
+      <div class="step rv"><span class="n">01</span><h3>Helloo connects to your system</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Your current provider</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Any legacy phone system</li></ul></div>
+      <div class="step rv d1"><span class="n">02</span><h3>Helloo recreates your routing</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Ports your number</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Reads your existing flows</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Rebuilds them with AI</li></ul></div>
+      <div class="step rv d2"><span class="n">03</span><h3>Helloo covers the switch</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Handles the paperwork</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Pays porting fees</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Takes over your contract</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Pricing</span>
+      <h2 class="h2">Up to 3x more affordable. <em>Pay only for what you use.</em></h2>
+    </div>
+    <div class="price-wrap">
+      <div class="compare rv">
+        <div><span class="eyebrow">Cost per seat, per month</span><div class="bars">
+          <div class="bar"><b><span>Helloo</span><span>$29</span></b><div class="track"><i style="width:32%"></i></div></div>
+          <div class="bar alt"><b><span>Typical phone system</span><span>$90</span></b><div class="track"><i style="width:100%"></i></div></div>
+        </div></div>
+        <p class="note" style="text-align:left;margin-top:28px">ILLUSTRATIVE PRICES FOR A FICTIONAL PRODUCT</p>
+      </div>
+      <div class="rv d1">
+        <div class="toggle" id="bill"><button class="on" data-m="y">Yearly</button><button data-m="m">Monthly</button></div>
+        <div class="plans">
+          <div class="plan"><span class="eyebrow">Solo</span><div class="price"><span data-y="9" data-m="12">$9</span><small> /seat /mo</small></div><p>For one person with one line.</p><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>One local number</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Calls and texts</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Free porting</li></ul><a href="#start" class="btn">Start free</a></div>
+          <div class="plan pop"><span class="eyebrow">Business</span><div class="price"><span data-y="29" data-m="39">$29</span><small> /seat /mo</small></div><p>For teams that work as one.</p><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Shared inbox and routing</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Recording and AI summaries</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>CRM sync and open API</li></ul><a href="#start" class="btn btn-primary">Start free</a></div>
+          <div class="plan"><span class="eyebrow">Ultra</span><div class="price"><span>$90</span><small> /seat /mo</small></div><p>For heavy usage, through sales.</p><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Everything in Business</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Advanced reporting</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Priority support</li></ul><a href="#faq" class="btn">Talk to sales</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Features</span>
+      <h2 class="h2">Everything you need for inbound <em>and outbound calls.</em></h2>
+    </div>
+    <div class="fgrid">
+      <article class="fcard wide rv"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/></svg></span><h3>Local and international numbers</h3><p>Call and text from a local number in many countries, with clear per-minute rates and no surprises on the bill. Add a new number in seconds.</p><div class="code"><span class="c"># your numbers</span><br>+1 415 555 0128 &nbsp;<span class="k">active</span><br>+44 20 7946 0142 &nbsp;<span class="k">active</span><br>+33 1 99 00 12 34 &nbsp;<span class="k">added to your line</span></div></article>
+      <article class="fcard rv d1"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg></span><h3>AI receptionist</h3><p>Answers what callers ask, books a slot that is really free on your calendar, hands off to a person when needed and writes the call into your CRM.</p></article>
+      <article class="fcard rv"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><h3>Power dialer</h3><p>Build a queue or push a filtered list from your CRM. See each contact before you connect, and skip, tag or note between calls.</p></article>
+      <article class="fcard rv d1"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><h3>Recording, transcripts, summaries</h3><p>A recording, a word-for-word transcript and an AI summary start the moment a call connects. Nothing to press.</p></article>
+      <article class="fcard rv d2"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><h3>Every device you use</h3><p>iOS, Android, macOS, Windows and Web. Same line, same inbox, wherever your team works.</p></article>
+      <article class="fcard rv"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span><h3>Click to call, in any tool</h3><p>Dial from your CRM and thousands of other apps without leaving them. Calls and notes land on the right record on their own.</p></article>
+      <article class="fcard rv d1"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></span><h3>Build on the API</h3><p>Every call, summary and contact is readable and writable from your own code. Trigger anything on any call event.</p></article>
+      <article class="fcard rv d2"><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg></span><h3>Run it from your AI</h3><p>Connect Helloo to your AI client and manage your phone system in plain words.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="fit" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">Who it is for</span>
+      <h2 class="h2">Sorry, enterprises. <em>Helloo is not for you.</em></h2>
+      <p class="lead">Most phone systems are made for teams of 250 and up. We built Helloo for everyone else.</p>
+    </div>
+    <div class="fit">
+      <div class="fit-col rv"><h3>Helloo is for</h3><ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Lean teams that want the best for less</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>A full phone system that works smarter, not harder</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Busy reps who cannot wait weeks for a fix</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Paying only for what a small team needs</li></ul>
+        <div class="seats"><span class="eyebrow">Sweet spot: 1 to 50 seats</span><div class="track"><i style="width:20%"></i></div><div class="marks"><span>1</span><span>50</span><span>100</span><span>150</span><span>200</span><span>250+</span></div></div></div>
+      <div class="fit-col no rv d1"><h3>Helloo is not for</h3><ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>Big organizations with even bigger budgets</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>Teams that need numbers to burn, quantity over quality</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>People used to slow support tickets</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>Anyone happy to pay for bloated features</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head center rv" style="text-align:center">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="h2">Questions people ask <em>before they switch.</em></h2>
+    </div>
+    <div class="faq rv">
+      <div class="qa open"><button aria-expanded="true">How much does Helloo cost?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Solo is $9 a seat per month, billed yearly. Business is $29 a seat per month billed yearly, or $39 month to month. Ultra is $90 a seat through sales. One number per seat and free porting are included, with no setup fee. The AI receptionist and power dialer are optional add-ons. There is no long contract, and the first 30 days are money-back.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">What is the Grok bot?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>It is Helloo's AI agent for calls. It picks up when nobody can, understands what the caller needs, checks your calendar and CRM, books or answers, and writes everything up afterward. When a conversation needs a person, it transfers the call with the context already attached.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Does it work with my CRM?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Yes. Helloo syncs natively with the most popular CRMs and spreadsheets, and reaches everything else through automation tools or the open API. Calls, summaries, tags and texts land on the right record on their own, so nobody types a call into a CRM again.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Can I try it first, and how hard is the setup?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>There is a 3-day free trial. Setup is guided and you do it yourself, with no technical skills involved. Most teams are taking calls the same day. If you would rather hand it over, our team can set up everything for a one-time fee.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">What does the AI receptionist actually do?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>It answers when nobody on your team can, asks callers what they need, books straight into your calendar, texts back missed calls and writes every call into your CRM. It hands the call to a person the moment one is needed.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">How does it work with several people?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Every seat comes with its own number, and you can add or remove people whenever you like. The team shares call history, tags and texts, so whoever picks up next sees what happened last time. You decide who rings and in what order.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false">Can I keep my current number?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="ans"><div><p>Yes, and porting is free in both directions. It takes a few business days with no downtime: you keep taking calls on your current service right up to the moment the number switches over.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="start" style="padding-top:0">
+  <div class="wrap">
+    <div class="final rv">
+      <h2>Say Helloo to a <em>better phone system.</em></h2>
+      <p>Reliable calls and proactive AI, at a price you can afford.</p>
+      <form class="signup" onsubmit="return false"><input type="email" placeholder="Your work email" aria-label="Work email"><button class="btn btn-primary" type="submit">Try for free</button></form>
+      <p class="fine">3-day free trial. No setup fee.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <a href="#top" class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="14" r="2.4" fill="currentColor" stroke="none"/><path d="M6 14a6 6 0 0 1 12 0"/><path d="M2.5 14a9.5 9.5 0 0 1 19 0" opacity=".55"/></svg></span>Helloo</a>
+      <div class="f-links"><a href="#pricing">Pricing</a><a href="#features">Features</a><a href="#faq">FAQ</a><a href="https://www.linkedin.com/in/lucasgava" target="_blank" rel="noopener">Lucas Gava</a></div>
+    </div>
+    <div class="f-bottom"><span>© 2026 Helloo</span><span>A fictional project. All data on this page is illustrative.</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // revelar ao rolar
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 }) : null;
+  document.querySelectorAll('.rv').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
+
+  // menu mobile
+  var menu = document.getElementById('menu'), panel = document.getElementById('panel');
+  function setMenu(on) { panel.classList.toggle('on', on); menu.setAttribute('aria-expanded', String(on)); }
+  menu.addEventListener('click', function () { setMenu(!panel.classList.contains('on')); });
+  panel.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('click', function (e) { if (!panel.contains(e.target) && !menu.contains(e.target)) setMenu(false); });
+
+  // faq
+  document.querySelectorAll('.qa button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var qa = b.parentNode, open = !qa.classList.contains('open');
+      document.querySelectorAll('.qa').forEach(function (o) { o.classList.remove('open'); o.querySelector('button').setAttribute('aria-expanded', 'false'); });
+      if (open) { qa.classList.add('open'); b.setAttribute('aria-expanded', 'true'); }
+    });
+  });
+
+  // preco mensal / anual
+  var bill = document.getElementById('bill');
+  bill.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    bill.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    document.querySelectorAll('.price span[data-y]').forEach(function (s) { s.textContent = '$' + s.getAttribute('data-' + b.getAttribute('data-m')); });
+  });
+})();
+</script>
+</body>
+</html>
