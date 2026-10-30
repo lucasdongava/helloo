@@ -65,19 +65,20 @@
     $$('.w > span', h).forEach(function (s, i) { s.style.animationDelay = (i * 70 + 80) + 'ms'; });
   });
 
-  // palavra que gira
+  // palavra que gira: fade + deslize + largura animada (sem cortar)
   $$('.rot').forEach(function (el) {
     var words = el.getAttribute('data-words').split(','), i = 0, inn = el.querySelector('.rot-in');
     if (rm) return;
+    function fit() { el.style.width = inn.getBoundingClientRect().width + 'px'; }
+    fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); addEventListener('resize', fit);
     setInterval(function () {
       inn.classList.add('out');
       setTimeout(function () {
-        i = (i + 1) % words.length; inn.textContent = words[i];
+        i = (i + 1) % words.length; inn.textContent = words[i]; fit();
         inn.classList.remove('out'); inn.classList.add('pre'); void inn.offsetWidth; inn.classList.remove('pre');
-      }, 450);
-    }, 2200);
+      }, 520);
+    }, 3000);
   });
-
   // numeros que contam
   window.helloTween = function (el, to) {
     var from = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0, t0 = null, dur = 600;
@@ -205,14 +206,6 @@
   $$('.cnt b').forEach(function (b) { var n = +b.textContent; setInterval(function () { n++; b.textContent = n; }, 1300); });
 
   if (fine) {
-    // inclinacao 3D nas ilustracoes e nos cartoes de plataforma
-    $$('.sv,.pcard').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var b = el.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;
-        el.style.transform = 'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 7).toFixed(2) + 'deg)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
     // brilho que segue o cursor
     var g = document.createElement('div'); g.className = 'glow'; document.body.appendChild(g);
     var tx = innerWidth / 2, ty = 200, cx = tx, cy = ty;
@@ -334,10 +327,6 @@
   size(); addEventListener('resize', function () { size(); });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: .05 }).observe(cv); else { visible = true; start(); }
   if (rm) { visible = true; frame(performance.now()); }
-  // arrastar para girar
-  cv.addEventListener('pointerdown', function (e) { drag = true; lastX = e.clientX; cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing'; });
-  cv.addEventListener('pointermove', function (e) { if (!drag) return; rotY -= (e.clientX - lastX) * .008; lastX = e.clientX; });
-  ['pointerup', 'pointercancel'].forEach(function (ev) { cv.addEventListener(ev, function () { drag = false; cv.style.cursor = ''; }); });
 })();
 
 /* ========== animacoes so rodam quando visiveis ========== */
