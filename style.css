@@ -1413,3 +1413,22 @@ footer{margin-top:104px}
 .thread .flash{display:none!important}
 .rb.acc2::after,.oc-av::after{display:none!important}
 .t-ic::after{display:none!important}
+
+/* ===== pricing: titulo + calculadora num bloco so, mais limpo ===== */
+.pr-top{padding:calc(var(--ann-h) + var(--nav-h) + 64px) 0 40px}
+.pr-title{font-size:clamp(30px,4vw,46px);letter-spacing:-.045em;text-align:center;margin:0 auto 44px;max-width:720px}
+.pr-title em{font-style:normal;color:#a1a1a6}
+.pr-top .calc{max-width:880px;margin:0 auto}
+.calc-in{padding:36px 38px;gap:8px}
+.calc-out{padding:36px 38px}
+.c-row{margin-top:16px}
+.c-row:first-child{margin-top:0}
+.c-row label{font-size:13px;font-weight:500;color:var(--text-2)}
+.seg button,.calc .toggle button{padding:9px 0;font-size:13.5px}
+.sw{padding:12px 14px;font-size:14px}
+.o-lab{font-size:13px}
+.o-num b{font-size:clamp(46px,5vw,60px)}
+#note{min-height:18px;font-size:13px}
+.o-list{margin:26px 0;gap:11px}
+.o-list li{font-size:14px}
+@media (max-width:700px){.pr-top{padding:calc(var(--ann-h) + var(--nav-h) + 40px) 0 28px}.pr-title{margin-bottom:28px}.calc-in,.calc-out{padding:24px 20px}}
