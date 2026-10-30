@@ -1054,3 +1054,99 @@ footer{margin-top:72px}
 .gk .bub.bot{background:var(--blue);color:#fff}
 .res-tags span{border-color:#2a3a52}
 .lside span.on,.av.dark{background:var(--blue);color:#fff}
+
+/* ===== chamada final rica: texto + pilha de notificacoes ===== */
+.final.rich{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;text-align:left;padding:60px 56px;overflow:hidden}
+.final.rich .rings{left:70%;bottom:auto;top:50%;margin:-260px 0 0 -260px}
+.fin-l{position:relative}
+.final.rich h2{font-size:clamp(32px,4vw,50px);line-height:1.04}
+.fin-sub{margin-top:14px;font-size:16px;color:rgba(255,255,255,.82);max-width:380px}
+.final.rich .pillform{margin:28px 0 0;max-width:460px}
+.final.rich .trust{justify-content:flex-start;margin-top:22px}
+.fin-r{position:relative;height:330px}
+.notifs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.notifs::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 65%);filter:blur(8px)}
+.nt{position:absolute;left:50%;top:0;width:min(100%,330px);margin-left:-165px;display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:18px;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 18px 40px -16px rgba(0,30,110,.5),0 0 0 1px rgba(255,255,255,.5) inset;opacity:0;animation:nstack 12s infinite;animation-delay:calc(var(--i) * -3s)}
+.nt > div{flex:1;min-width:0}
+.nt b{display:block;font-size:13.5px;font-weight:500;color:#1c1c1e}
+.nt > div > span{display:block;font-size:12.5px;color:#6b6b72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nt small{font-size:11.5px;color:#8e8e93}
+.ni{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff}
+.ni svg{width:19px;height:19px}
+.ni.g{background:linear-gradient(180deg,#62e283,#2fb94f)}
+.ni.b{background:linear-gradient(180deg,#2fa4ff,#0a6eff)}
+.nb{flex:0 0 auto;font-size:12.5px;font-weight:500;padding:6px 14px;border-radius:99px;background:var(--green);color:#fff}
+@keyframes nstack{
+  0%{opacity:0;transform:translateY(250px) scale(.9);animation-timing-function:cubic-bezier(.16,1,.3,1)}
+  7%,23%{opacity:1;transform:translateY(204px) scale(1);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+  32%,48%{opacity:1;transform:translateY(108px) scale(1);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+  57%,73%{opacity:1;transform:translateY(12px) scale(1);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+  82%{opacity:0;transform:translateY(-56px) scale(.94)}
+  100%{opacity:0;transform:translateY(-56px) scale(.94)}
+}
+@media (max-width:900px){.final.rich{grid-template-columns:1fr;padding:48px 24px 28px;gap:20px}.final.rich .rings{left:50%;top:auto;bottom:-260px;margin:0 0 0 -260px}.fin-r{height:310px}}
+@media (prefers-reduced-motion:reduce){.nt{animation:none;opacity:1}.nt:nth-child(1){transform:translateY(12px)}.nt:nth-child(2){transform:translateY(108px)}.nt:nth-child(3){transform:translateY(204px)}.nt:nth-child(4){display:none}}
+
+/* =============== RESPIRO E RITMO ===============
+   mais espaco entre secoes e dentro delas; menos coisas juntas */
+.section{padding:116px 0}
+.section-head{margin-bottom:60px}
+.section-head .h2{margin-top:0}
+.section-head .lead{margin-top:18px}
+.hero{padding-bottom:48px}
+.hero .lead{margin-top:22px}
+.signup{margin-top:34px}
+.fine{margin-top:16px}
+.strip{margin-top:96px}
+.strip-item{padding:30px 26px}
+/* porque trocar */
+.why{gap:24px}
+.wc{padding:36px 34px}
+.wc .bad{display:none}
+.wc h3{margin-top:0}
+.wc p{margin-top:12px;line-height:1.6}
+.mini-ui{margin-top:30px;padding:16px}
+/* grok */
+.gk{padding:84px 56px 56px}
+.gk-top p{margin-top:20px}
+.gk-actions{margin-top:34px}
+.console{margin-top:68px}
+.c-col{padding:28px}
+.gk .legal{margin-top:36px}
+/* troca */
+.switch{gap:24px}
+.step{padding:36px 32px}
+.step h3{margin-top:18px}
+.step ul{margin-top:20px;gap:10px}
+/* faq */
+.faq{margin-top:0}
+.qa button{padding:24px 4px}
+/* paginas internas */
+.ph{padding-bottom:48px}
+.ph h1{max-width:700px}
+.ph-cta{margin-top:34px}
+.zig{gap:84px;padding:64px 0}
+.zigs{padding-bottom:40px}
+.zig-tx > p{margin-top:14px}
+.zig-tx ul{margin-top:26px;gap:12px}
+.demo{margin-top:8px}
+.d-stage{padding:30px}
+.d-row{padding:16px 18px}
+.d-panel{gap:12px}
+.sync{padding:64px 56px;gap:56px}
+.sync-copy p{margin-top:20px}
+.plat{gap:16px;margin-top:28px}
+.pcard{padding:26px 22px 22px}
+.calc-in{padding:40px;gap:12px}
+.calc-out{padding:40px}
+.c-row{margin-top:18px}
+.o-list{margin:34px 0;gap:14px}
+.cmp th,.cmp td{padding:16px 20px}
+.final{margin-top:0}
+.final.rich{padding:76px 64px;gap:48px}
+.final.rich .pillform{margin-top:32px}
+.final.rich .trust{margin-top:26px}
+footer{margin-top:104px}
+@media (max-width:980px){.section{padding:80px 0}.section-head{margin-bottom:44px}.zig{gap:34px;padding:44px 0}.gk{padding:56px 24px 36px}.console{margin-top:44px}.sync{padding:44px 24px}.final.rich{padding:52px 26px 30px}}
+@media (max-width:700px){.section{padding:68px 0}.wc{padding:28px 24px}.step{padding:30px 24px}.gk{padding:48px 18px 28px}.c-col{padding:22px}.strip{margin-top:64px}footer{margin-top:72px}}
+.final.rich .fin-sub{color:rgba(255,255,255,.86);max-width:360px}
