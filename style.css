@@ -942,3 +942,115 @@ footer{margin-top:72px}
 :where(a,button,input,[role=switch]):focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:8px}
 .btn:active{transform:scale(.97)}
 .rot{height:1.26em;line-height:1.22;margin-bottom:-.14em;padding-bottom:.04em}
+
+/* ===== header: sem linha; vira pilula ao rolar ===== */
+.nav{background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-bottom:0!important;box-shadow:none!important;pointer-events:none;transform:none!important}
+.nav .wrap{pointer-events:auto;border:1px solid transparent;border-radius:99px;transition:max-width .75s var(--ease),height .6s var(--ease),margin-top .6s var(--ease),padding .6s var(--ease),background .45s,border-color .45s,box-shadow .6s}
+.nav.scrolled .wrap{max-width:760px;height:48px;margin-top:8px;padding:0 8px 0 16px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-color:rgba(229,229,231,.9);box-shadow:0 12px 40px -18px rgba(9,9,11,.35),0 1px 0 rgba(255,255,255,.6) inset}
+.nav.scrolled .brand{font-size:16px}
+.nav.scrolled .nav-links a{padding:6px 10px}
+.nav.scrolled .nav-cta .btn{height:32px;padding:0 13px}
+.nav.scrolled .nav-cta .login{display:none}
+@media (max-width:980px){.nav.scrolled .wrap{max-width:calc(100% - 24px);padding:0 8px 0 14px}}
+
+/* =============== PALETA iOS (Telefone + App Store) ===============
+   fundo segue branco; cor entra em CTAs, estados e detalhes */
+:root{
+  --blue:#007aff;--blue-d:#0a66ff;--as-top:#1ac8ff;
+  --green:#34c759;--green-d:#2fb44f;--red:#ff3b30;
+  --soft:#f6f6fa;--soft-2:#eeeef3;
+}
+::selection{background:#cfe4ff}
+:where(a,button,input,[role=switch]):focus-visible{outline-color:var(--blue)}
+.prog{background:linear-gradient(90deg,var(--as-top),var(--blue))}
+.glow{background:radial-gradient(circle,rgba(10,110,255,.07),transparent 65%)}
+/* CTA: azul do icone da App Store */
+.btn-primary,.nav-cta .btn-primary{background:linear-gradient(180deg,#2fa4ff 0%,#0a6eff 100%);border-color:#0a66ff;color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 10px 22px -10px rgba(10,102,255,.65)}
+.btn-primary:hover{background:linear-gradient(180deg,#4ab0ff 0%,#1a7bff 100%)}
+.btn:not(.btn-primary):hover{border-color:#bcd6ff}
+/* marca: icone verde do app Telefone */
+.brand-mark{background:linear-gradient(180deg,#62e283,#2fb94f);box-shadow:0 5px 12px -5px rgba(47,185,79,.7)}
+.nav-links a.on{color:var(--blue);background:#eaf3ff}
+.nav-links a:hover{color:var(--blue)}
+.rot{color:var(--blue)}
+/* checks e detalhes */
+.zig-tx li svg,.bul li svg,.plan li svg,.cmp td svg,.pop-chip svg,.chips svg,.chips2 svg{color:var(--blue)}
+.b.chip svg,.stamp svg,.chips2 i{color:var(--green);background:none}
+.chips2 i{background:var(--green)}
+.tick,.steps .ic{background:var(--green);color:#fff}
+.sw[aria-checked=true] .sw-t{background:var(--green)}
+.sw[aria-checked=true]{border-color:#bfe9c9;background:#f4fbf6}
+.toggle .tpill,.seg .sgp{background:var(--blue)}
+.plan.pop{border-color:var(--blue)}
+.d-tab.on .bar i{background:var(--blue)}
+.d-tab.on b{color:var(--ink)}
+.d-row small.hot{color:var(--green)}
+.d-row small.hot::before{background:var(--green)}
+.d-flow i{background:linear-gradient(90deg,var(--as-top),var(--blue))}
+.gdot{background:var(--green)}
+.tabs span.on{background:var(--blue);border-color:var(--blue)}
+.dock span.on{color:var(--blue)}
+.m-me,.chat .me{background:var(--blue)}
+.pcard:hover .pic,.apps span:hover,.role-list span:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.pcard:hover .arr{color:var(--blue)}
+.zig-tx.in li svg{color:var(--blue)}
+/* telefone: atender verde, recusar vermelho */
+.t-btn,.t-ic{background:var(--green)}
+.t-ic::after{border-color:var(--green)}
+.pbtns .acc{background:var(--green);color:#fff}
+.pbtns .acc::after{border-color:var(--green)}
+.pbtns .dec{background:var(--red)}
+.wavebar i{background:var(--green)}
+.fv .cb{background:var(--green)}
+.fv .v-miss .r svg{color:var(--red)}
+.sv2 .rec .dot{background:var(--red)}
+/* mensagens azuis (iMessage) */
+.b.bot,.fv .th.n1{background:var(--blue);border-color:var(--blue);color:#fff}
+.fv .t-ok{background:#e4f8ea;color:var(--green)}
+/* ilustracoes */
+.hs{stroke:var(--blue)}
+.sv4 .blk{background:var(--blue)}
+.sv4 .blk::after{border-color:var(--blue)}
+.sv5 .roll em{background:var(--green)}
+.sv5 .gr i,.fv .v-bars i{background:linear-gradient(180deg,#2fa4ff,#0a6eff)}
+.sv6 .sb{border-color:var(--blue)}
+.nd.dk{fill:var(--blue);stroke:var(--blue)}
+.dt{fill:var(--green)}
+.sv8 .pin{fill:var(--blue)}.sv8 .pulse{stroke:var(--blue)}.sv8 .mv{fill:var(--green)}.sv8 .route{stroke:#7fb4ff}
+.wire{stroke:#9ec5ff}
+.fv .tl .ngt{background:var(--blue)}
+.fv .v-rec .wv i{background:var(--blue)}
+.fv .v-ivr b{background:#eaf3ff;color:var(--blue)}
+.fv .th.n1{color:#fff}
+.tb.t3::after,.tb.t5::after{border-color:var(--green)}
+@keyframes taken{0%,22%{background:#fff;border-color:var(--line);transform:none}27%{transform:scale(1.14)}31%,80%{background:var(--green);border-color:var(--green);transform:none}90%,100%{background:#fff;border-color:var(--line)}}
+@keyframes ra1{0%,3%{background:#fff;color:var(--ink)}5%,16%{background:var(--green);border-color:var(--green);color:#fff}18%,56%{background:#fff;color:var(--ink)}58%,82%{background:var(--green);border-color:var(--green);color:#fff}86%,100%{background:#fff;color:var(--ink)}}
+@keyframes ra2{0%,14%{background:#fff;color:var(--ink)}16%,27%{background:var(--green);border-color:var(--green);color:#fff}29%,56%{background:#fff;color:var(--ink)}58%,82%{background:var(--green);border-color:var(--green);color:#fff}86%,100%{background:#fff;color:var(--ink)}}
+@keyframes ra3{0%,25%{background:#fff;color:var(--ink)}27%,38%{background:var(--green);border-color:var(--green);color:#fff}40%,56%{background:#fff;color:var(--ink)}58%,82%{background:var(--green);border-color:var(--green);color:#fff}86%,100%{background:#fff;color:var(--ink)}}
+@keyframes ra4{0%,36%{background:#fff;color:var(--ink)}38%,49%{background:var(--green);border-color:var(--green);color:#fff}51%,56%{background:#fff;color:var(--ink)}58%,82%{background:var(--green);border-color:var(--green);color:#fff}86%,100%{background:#fff;color:var(--ink)}}
+@keyframes iv1{0%,28%{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}34%,100%{background:#fff;color:var(--ink);transform:none}}
+@keyframes iv2{0%,30%{background:#fff;color:var(--ink)}34%,62%{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}68%,100%{background:#fff;color:var(--ink);transform:none}}
+@keyframes iv3{0%,64%{background:#fff;color:var(--ink)}68%,96%{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}100%{background:#fff;color:var(--ink);transform:none}}
+@keyframes act{0%,30%{background:var(--blue);color:#fff;transform:translateX(12px);border-color:var(--blue)}36%,100%{background:#fff;color:var(--ink);transform:none;border-color:var(--line)}}
+@keyframes hl{0%,38%{background:transparent;color:var(--text-2)}46%,84%{background:var(--blue);color:#fff}94%,100%{background:transparent}}
+.fv .i1 b,.fv .i2 b,.fv .i3 b{background:#eaf3ff}
+/* chamada final: bloco azul da App Store */
+.final{background:linear-gradient(165deg,#1ac8ff 0%,#0a66ff 100%)}
+.final h2 em{color:rgba(255,255,255,.72)}
+.final::before{background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px)}
+.rings i{border-color:rgba(255,255,255,.42)}
+.pillform{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4)}
+.final .signup input{color:#fff!important}
+.final .signup input::placeholder{color:rgba(255,255,255,.72)}
+.final .pillform:focus-within{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.final .btn-primary{background:#fff;color:var(--blue-d);border-color:#fff;box-shadow:0 10px 24px -12px rgba(0,40,120,.6)}
+.final .btn-primary:hover{background:#f2f7ff}
+.trust li{color:rgba(255,255,255,.88)}
+.trust svg{color:#fff}
+.final .fine{color:rgba(255,255,255,.75)}
+/* blocos escuros: CTA azul + detalhes */
+.gk .btn,.calc-out .btn{background:linear-gradient(180deg,#2fa4ff 0%,#0a6eff 100%);color:#fff;border-color:#0a66ff}
+.gk .btn:hover,.calc-out .btn:hover{background:linear-gradient(180deg,#4ab0ff,#1a7bff)}
+.gk .bub.bot{background:var(--blue);color:#fff}
+.res-tags span{border-color:#2a3a52}
+.lside span.on,.av.dark{background:var(--blue);color:#fff}

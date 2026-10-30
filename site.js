@@ -176,11 +176,7 @@
   function onScroll() {
     var h = document.documentElement, y = h.scrollTop, max = h.scrollHeight - h.clientHeight;
     bar.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
-    if (nav) {
-      nav.classList.toggle('scrolled', y > 10);
-      var open = panel && panel.classList.contains('on');
-      if (!open && y > lastY + 6 && y > 240) nav.classList.add('hide'); else if (y < lastY - 6 || open) nav.classList.remove('hide');
-    }
+    if (nav) nav.classList.toggle('scrolled', y > 24);
     lastY = y; para(); tick = false;
   }
   addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -319,12 +315,12 @@
         var px = cx + q[0] * R, py = cy - q[1] * R;
         if (prev && vis && prev.v) {
           var k = (s - tailStart) / Math.max(1, n - tailStart);
-          ctx.strokeStyle = 'rgba(9,9,11,' + (alpha * (.15 + .85 * k)).toFixed(2) + ')'; ctx.lineWidth = 1.3;
+          ctx.strokeStyle = 'rgba(0,122,255,' + (alpha * (.18 + .82 * k)).toFixed(2) + ')'; ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(px, py); ctx.stroke();
         }
         prev = { x: px, y: py, v: vis };
       }
-      if (prev && prev.v && ph < .6) { ctx.fillStyle = '#09090b'; ctx.beginPath(); ctx.arc(prev.x, prev.y, 2.6, 0, 7); ctx.fill(); }
+      if (prev && prev.v && ph < .6) { ctx.fillStyle = '#007aff'; ctx.beginPath(); ctx.arc(prev.x, prev.y, 2.6, 0, 7); ctx.fill(); }
       if (ph > .05) act[ar.a] = Math.max(act[ar.a] || 0, 1 - Math.min(1, ph * 2));
       if (ph > .5 && ph < .9) act[ar.b] = Math.max(act[ar.b] || 0, 1 - (ph - .5) / .4);
     });
@@ -332,8 +328,8 @@
     Object.keys(C).forEach(function (k) {
       var q = rot(vec(C[k][0], C[k][1])); if (q[2] < 0.02) return;
       var px = cx + q[0] * R, py = cy - q[1] * R;
-      ctx.fillStyle = '#09090b'; ctx.beginPath(); ctx.arc(px, py, 2.6, 0, 7); ctx.fill();
-      var p = act[k]; if (p > 0) { ctx.strokeStyle = 'rgba(9,9,11,' + (p * .5).toFixed(2) + ')'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(px, py, 3 + (1 - p) * 13, 0, 7); ctx.stroke(); }
+      ctx.fillStyle = '#34c759'; ctx.beginPath(); ctx.arc(px, py, 3, 0, 7); ctx.fill();
+      var p = act[k]; if (p > 0) { ctx.strokeStyle = 'rgba(52,199,89,' + (p * .7).toFixed(2) + ')'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(px, py, 3 + (1 - p) * 13, 0, 7); ctx.stroke(); }
     });
     // brilho da borda
     var e = ctx.createRadialGradient(cx, cy, R * .78, cx, cy, R);
