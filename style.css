@@ -1432,3 +1432,4 @@ footer{margin-top:104px}
 .o-list{margin:26px 0;gap:11px}
 .o-list li{font-size:14px}
 @media (max-width:700px){.pr-top{padding:calc(var(--ann-h) + var(--nav-h) + 40px) 0 28px}.pr-title{margin-bottom:28px}.calc-in,.calc-out{padding:24px 20px}}
+.pr-top{padding-top:calc(var(--ann-h) + var(--nav-h) + 56px)}
