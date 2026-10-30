@@ -1405,3 +1405,11 @@ footer{margin-top:104px}
 .ring-in small{overflow:hidden;text-overflow:ellipsis;font-size:10.5px}
 .ring-in .av{width:32px;height:32px}
 .rb{width:32px;height:32px}
+
+/* telefone da home: sem vibrar e sem brilhos */
+.phone{animation:none!important}
+.phone::after{display:none!important}
+.stage::before{display:none!important}
+.thread .flash{display:none!important}
+.rb.acc2::after,.oc-av::after{display:none!important}
+.t-ic::after{display:none!important}
