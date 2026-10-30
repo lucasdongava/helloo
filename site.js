@@ -166,7 +166,6 @@
   if (rm) return;
 
   // barra de progresso + nav que some ao descer
-  var bar = document.createElement('div'); bar.className = 'prog'; document.body.appendChild(bar);
   var nav = document.querySelector('.nav'), panel = document.getElementById('panel'), lastY = 0, tick = false;
   var svs = $$('.zig .sv');
   function para() {
@@ -175,7 +174,6 @@
   }
   function onScroll() {
     var h = document.documentElement, y = h.scrollTop, max = h.scrollHeight - h.clientHeight;
-    bar.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
     if (nav) nav.classList.toggle('scrolled', y > 24);
     lastY = y; para(); tick = false;
   }
