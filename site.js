@@ -205,13 +205,6 @@
   // contador de discagens
   $$('.cnt b').forEach(function (b) { var n = +b.textContent; setInterval(function () { n++; b.textContent = n; }, 1300); });
 
-  if (fine) {
-    // brilho que segue o cursor
-    var g = document.createElement('div'); g.className = 'glow'; document.body.appendChild(g);
-    var tx = innerWidth / 2, ty = 200, cx = tx, cy = ty;
-    addEventListener('pointermove', function (e) { tx = e.clientX; ty = e.clientY; });
-    (function loop() { cx += (tx - cx) * .08; cy += (ty - cy) * .08; g.style.transform = 'translate(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px)'; requestAnimationFrame(loop); })();
-  }
 
   // cortina entre paginas
   var cur = document.createElement('div'); cur.className = 'curtain'; document.body.appendChild(cur);
@@ -301,12 +294,12 @@
         var px = cx + q[0] * R, py = cy - q[1] * R;
         if (prev && vis && prev.v) {
           var k = (s - tailStart) / Math.max(1, n - tailStart);
-          ctx.strokeStyle = 'rgba(0,122,255,' + (alpha * (.18 + .82 * k)).toFixed(2) + ')'; ctx.lineWidth = 1.5;
+          ctx.strokeStyle = 'rgba(9,9,11,' + (alpha * (.18 + .82 * k)).toFixed(2) + ')'; ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(px, py); ctx.stroke();
         }
         prev = { x: px, y: py, v: vis };
       }
-      if (prev && prev.v && ph < .6) { ctx.fillStyle = '#007aff'; ctx.beginPath(); ctx.arc(prev.x, prev.y, 2.6, 0, 7); ctx.fill(); }
+      if (prev && prev.v && ph < .6) { ctx.fillStyle = '#09090b'; ctx.beginPath(); ctx.arc(prev.x, prev.y, 2.6, 0, 7); ctx.fill(); }
       if (ph > .05) act[ar.a] = Math.max(act[ar.a] || 0, 1 - Math.min(1, ph * 2));
       if (ph > .5 && ph < .9) act[ar.b] = Math.max(act[ar.b] || 0, 1 - (ph - .5) / .4);
     });
@@ -314,8 +307,8 @@
     Object.keys(C).forEach(function (k) {
       var q = rot(vec(C[k][0], C[k][1])); if (q[2] < 0.02) return;
       var px = cx + q[0] * R, py = cy - q[1] * R;
-      ctx.fillStyle = '#34c759'; ctx.beginPath(); ctx.arc(px, py, 3, 0, 7); ctx.fill();
-      var p = act[k]; if (p > 0) { ctx.strokeStyle = 'rgba(52,199,89,' + (p * .7).toFixed(2) + ')'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(px, py, 3 + (1 - p) * 13, 0, 7); ctx.stroke(); }
+      ctx.fillStyle = '#71717a'; ctx.beginPath(); ctx.arc(px, py, 3, 0, 7); ctx.fill();
+      var p = act[k]; if (p > 0) { ctx.strokeStyle = 'rgba(9,9,11,' + (p * .7).toFixed(2) + ')'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(px, py, 3 + (1 - p) * 13, 0, 7); ctx.stroke(); }
     });
     // brilho da borda
     var e = ctx.createRadialGradient(cx, cy, R * .78, cx, cy, R);
